@@ -6,11 +6,12 @@ do {
         1. Nhập mảng 2 chiều
         2. Hiển thị mảng 2 chiều
         3. Tính tổng các phần tử trong mảng
-        4. Tìm phần tử lớn nhất trong mảng và chỉ số của nó
-        5. Tính trung bình cộng các phần tử trong một hàng cụ thể
-        6. Đảo ngược các hàng trong mảng
+        4. Tính tổng đường chéo chính
+        5. Tính tổng đường chéo phụ
+        6. Tính trung bình cộng các phần tử trong một hàng hoặc một cột
         7. Thoát
         Lựa chọn của bạn:`);
+
     switch (choose) {
         case 1:
             rows = +prompt("Nhập số hàng:");
@@ -57,46 +58,56 @@ do {
             if (arr.length === 0) {
                 console.log("Mảng chưa có phần tử nào.");
             } else {
-                let max = arr[0][0];
-                let index = [0, 0];
+                let sum = 0;
                 for (let i = 0; i < rows; i++) {
-                    for (let j = 0; j < cols; j++) {
-                        if (arr[i][j] > max) {
-                            max = arr[i][j];
-                            index = [i, j];
-                        }
-                    }
+                    sum += arr[i][i]; // Đường chéo chính (i, i)
                 }
-                console.log(`Phần tử lớn nhất trong mảng là ${max} tại vị trí (${index[0]}, ${index[1]})`);
+                console.log(`Tổng đường chéo chính: ${sum}`);
             }
             break;
         case 5:
             if (arr.length === 0) {
                 console.log("Mảng chưa có phần tử nào.");
             } else {
-                let rowNum = +prompt("Nhập chỉ số hàng muốn tính trung bình:");
-                if (rowNum >= 0 && rowNum < rows) {
-                    let sum = 0;
-                    for (let j = 0; j < cols; j++) {
-                        sum += arr[rowNum][j];
-                    }
-                    let avg = sum / cols;
-                    console.log(`Trung bình cộng của hàng ${rowNum} là: ${avg}`);
-                } else {
-                    console.log("Chỉ số hàng không hợp lệ!");
+                let sum = 0;
+                for (let i = 0; i < rows; i++) {
+                    sum += arr[i][cols - i - 1]; // Đường chéo phụ (i, cols - i - 1)
                 }
+                console.log(`Tổng đường chéo phụ: ${sum}`);
             }
             break;
         case 6:
             if (arr.length === 0) {
                 console.log("Mảng chưa có phần tử nào.");
             } else {
-                for (let i = 0; i < rows; i++) {
-                    arr[i].reverse();
-                }
-                console.log("Mảng sau khi đảo ngược hàng:");
-                for (let i = 0; i < rows; i++) {
-                    console.log(arr[i]);
+                let type = prompt("Bạn muốn tính trung bình theo (h) hàng hay (c) cột?").toLowerCase();
+                switch (type) {
+                    case "h":
+                        let rowNum = +prompt("Nhập chỉ số hàng muốn tính trung bình:");
+                        if (rowNum >= 0 && rowNum < rows) {
+                            let sum = 0;
+                            for (let j = 0; j < cols; j++) {
+                                sum += arr[rowNum][j];
+                            }
+                            console.log(`Trung bình cộng của hàng ${rowNum}: ${sum / cols}`);
+                        } else {
+                            console.log("Chỉ số hàng không hợp lệ!");
+                        }
+                        break;
+                    case "c":
+                        let colNum = +prompt("Nhập chỉ số cột muốn tính trung bình:");
+                        if (colNum >= 0 && colNum < cols) {
+                            let sum = 0;
+                            for (let i = 0; i < rows; i++) {
+                                sum += arr[i][colNum];
+                            }
+                            console.log(`Trung bình cộng của cột ${colNum}: ${sum / rows}`);
+                        } else {
+                            console.log("Chỉ số cột không hợp lệ!");
+                        }
+                        break;
+                    default:
+                        console.log("Lựa chọn không hợp lệ! Vui lòng nhập 'h' hoặc 'c'.");
                 }
             }
             break;
