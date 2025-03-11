@@ -14,10 +14,14 @@ do {
   
     switch (choose) {
         case 1:
-            str = prompt("Nhập chuỗi bất kì:");
+            str = prompt("Nhập chuỗi bất kì");
             break;
         case 2:
-            console.log(str.length === 0 ? "Chuỗi rỗng" : str);
+            if (str.length === 0) {
+                console.log("Chuỗi rỗng");
+            } else {
+                console.log(str);
+            }
             break;
         case 3:
             if (str.length === 0) {
